@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: black;
+  color: white;
+}
+
+/* 富文本内容样式 */
+.rich-text-content {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.rich-text-content h1,
+.rich-text-content h2,
+.rich-text-content h3,
+.rich-text-content h4,
+.rich-text-content h5,
+.rich-text-content h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.rich-text-content h1 {
+  font-size: 2em;
+}
+
+.rich-text-content h2 {
+  font-size: 1.5em;
+}
+
+.rich-text-content h3 {
+  font-size: 1.25em;
+}
+
+.rich-text-content p {
+  margin-bottom: 1em;
+  line-height: 1.6;
+}
+
+.rich-text-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5em 0;
+}
+
+.rich-text-content ul, 
+.rich-text-content ol {
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+.rich-text-content ul li {
+  list-style-type: disc;
+  margin-bottom: 0.5em;
+}
+
+.rich-text-content ol li {
+  list-style-type: decimal;
+  margin-bottom: 0.5em;
+}
+
+.rich-text-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+}
+
+.rich-text-content table td,
+.rich-text-content table th {
+  border: 1px solid #333;
+  padding: 0.75em;
+  text-align: left;
+}
+
+.rich-text-content table th {
+  background-color: #222;
+  font-weight: 600;
+}
+
+.rich-text-content blockquote {
+  border-left: 4px solid #555;
+  padding-left: 1em;
+  margin: 1.5em 0;
+  font-style: italic;
+  color: #aaa;
+}
+
+.rich-text-content a {
+  color: #3b82f6;
+  text-decoration: none;
+}
+
+.rich-text-content a:hover {
+  text-decoration: underline;
+}
+
+/* 购物车添加动画相关样式 */
+.flying-ball {
+  animation: rotate 0.8s linear infinite;
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
