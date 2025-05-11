@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  
+  <!-- 本地仓库路径，改为容器内持久化目录 -->
+  <localRepository>/root/.m2/repository</localRepository>
+  
+  <!-- 服务器连接超时设置 -->
+  <servers>
+    <server>
+      <id>central</id>
+      <configuration>
+        <httpConfiguration>
+          <all>
+            <connectionTimeout>120000</connectionTimeout> <!-- 2分钟连接超时 -->
+            <readTimeout>120000</readTimeout> <!-- 2分钟读取超时 -->
+          </all>
+        </httpConfiguration>
+      </configuration>
+    </server>
+  </servers>
+  
+  <!-- 镜像配置 - 澳洲地区更合适的选择 -->
+  <mirrors>
+    <!-- Maven中央仓库 - 主要镜像 -->
+    <mirror>
+      <id>central</id>
+      <name>Maven Central</name>
+      <url>https://repo1.maven.org/maven2/</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+    
+    <!-- 备用镜像 - 澳洲/亚太地区 -->
+    <mirror>
+      <id>google</id>
+      <name>Google Maven Central</name>
+      <url>https://maven-central.storage.googleapis.com/</url>
+      <mirrorOf>central</mirrorOf>
+    </mirror>
+    
+    <!-- Spring仓库 -->
+    <mirror>
+      <id>spring-releases</id>
+      <name>Spring Releases</name>
+      <url>https://repo.spring.io/release</url>
+      <mirrorOf>spring</mirrorOf>
+    </mirror>
+    
+    <!-- Spring里程碑版本 -->
+    <mirror>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/milestone</url>
+      <mirrorOf>spring-milestone</mirrorOf>
+    </mirror>
+  </mirrors>
+  
+  <!-- 配置Maven从本地仓库优先获取依赖 -->
+  <profiles>
+    <profile>
+      <id>default-profile</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>https://repo1.maven.org/maven2</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>spring</id>
+          <url>https://repo.spring.io/release</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>spring-milestone</id>
+          <url>https://repo.spring.io/milestone</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <!-- 添加Apache仓库，确保能获取groovy依赖 -->
+        <repository>
+          <id>apache</id>
+          <url>https://repo.maven.apache.org/maven2</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>central</id>
+          <url>https://repo1.maven.org/maven2</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+          <id>spring</id>
+          <url>https://repo.spring.io/release</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  
+  <!-- 其他配置 -->
+  <activeProfiles>
+    <activeProfile>default-profile</activeProfile>
+  </activeProfiles>
+  
+  <!-- 配置代理（如果需要通过代理访问网络） -->
+  <!-- 
+  <proxies>
+    <proxy>
+      <id>http-proxy</id>
+      <active>true</active>
+      <protocol>http</protocol>
+      <host>proxy.example.com</host>
+      <port>8080</port>
+      <nonProxyHosts>localhost|127.0.0.1</nonProxyHosts>
+    </proxy>
+  </proxies>
+  -->
+  
+</settings> 

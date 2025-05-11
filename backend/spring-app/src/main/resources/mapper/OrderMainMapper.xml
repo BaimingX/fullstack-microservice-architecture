@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.OrderMainMapper">
+
+    <!-- resultMap for orderDetails -->
+    <resultMap id="OrderMainResultMap" type="com.example.entity.OrderMain">
+        <id property="id" column="id"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="userId" column="user_id"/>
+        <result property="totalPrice" column="total_price"/>
+        <result property="status" column="status"/>
+        <result property="payNo" column="pay_no"/>
+        <result property="createTime" column="create_time"/>
+        <result property="payTime" column="pay_time"/>
+        <result property="siteId" column="site_id"/>
+        <collection property="orderDetails" ofType="com.example.entity.OrderDetail" select="com.example.mapper.OrderDetailMapper.selectByOrderId" column="id"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="OrderMainResultMap">
+        SELECT * FROM order_main WHERE id = #{id}
+    </select>
+
+    <select id="selectByOrderNo" resultMap="OrderMainResultMap">
+        SELECT * FROM order_main WHERE order_no = #{orderNo}
+    </select>
+
+    <select id="selectAll" resultMap="OrderMainResultMap" parameterType="com.example.entity.OrderMain">
+        SELECT * FROM order_main
+        <where>
+            <if test="siteId != null">
+                AND site_id = #{siteId}
+            </if>
+            <if test="orderNo != null">
+                AND order_no LIKE CONCAT('%', #{orderNo}, '%')
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+    <select id="selectAllCoolStuff" resultMap="OrderMainResultMap" parameterType="com.example.entity.OrderMain">
+        SELECT order_main.*, cool_stuff_user.email as userEmail FROM order_main
+        left join cool_stuff_user on order_main.user_id = cool_stuff_user.id
+        <where>
+            <if test="siteId != null">
+                AND site_id = #{siteId}
+            </if>
+            <if test="orderNo != null">
+                AND order_no LIKE CONCAT('%', #{orderNo}, '%')
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+
+    <select id="selectAllByCoolStuffUser" resultMap="OrderMainResultMap" parameterType="com.example.entity.OrderMain">
+        SELECT
+            *
+        FROM
+            order_main
+        <where>
+            <if test="siteId != null">
+                AND site_id = #{siteId}
+            </if>
+            <if test="userId != null">
+                AND user_id = #{userId}
+            </if>
+        </where>
+        ORDER BY
+            create_time DESC
+    </select>
+
+
+
+    <insert id="insert" parameterType="com.example.entity.OrderMain" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO order_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">order_no,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="totalPrice != null">total_price,</if>
+            <if test="status != null">status,</if>
+            <if test="payNo != null">pay_no,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="payTime != null">pay_time,</if>
+            <if test="siteId != null">site_id,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="orderNo != null">#{orderNo},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="totalPrice != null">#{totalPrice},</if>
+            <if test="status != null">#{status},</if>
+            <if test="payNo != null">#{payNo},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="payTime != null">#{payTime},</if>
+            <if test="siteId != null">#{siteId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.OrderMain">
+        UPDATE order_main
+        <set>
+            <if test="orderNo != null">order_no = #{orderNo},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="totalPrice != null">total_price = #{totalPrice},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="payNo != null">pay_no = #{payNo},</if>
+            <if test="payTime != null">pay_time = #{payTime},</if>
+            <if test="addressLine1 != null">address_line1 = #{addressLine1},</if>
+            <if test="addressLine2 != null">address_line2 = #{addressLine2},</if>
+            <if test="suburb != null">suburb = #{suburb},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="postalCode != null">postal_code = #{postalCode},</if>
+            <if test="country != null">country = #{country},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    <delete id="deleteById">
+        DELETE FROM order_main WHERE id = #{id}
+    </delete>
+
+</mapper>

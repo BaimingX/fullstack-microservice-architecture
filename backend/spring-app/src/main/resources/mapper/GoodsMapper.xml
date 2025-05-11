@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.GoodsMapper">
+
+
+    <select id="selectAll" resultType="com.example.entity.Goods">
+        SELECT g.*, c.name AS categoryName
+        FROM goods g
+        LEFT JOIN category c ON g.category_id = c.id
+        <where>
+            <if test="name != null">
+                AND g.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="categoryId != null">
+                AND g.category_id = #{categoryId}
+            </if>
+            <if test="siteId != null">
+                AND g.site_id = #{siteId}
+
+            </if>
+        </where>
+        ORDER BY RAND()
+    </select>
+
+    <select id="selectAllOrderById" resultType="com.example.entity.Goods">
+        SELECT g.*, c.name AS categoryName
+        FROM goods g
+        LEFT JOIN category c ON g.category_id = c.id
+        <where>
+            <if test="name != null">
+                AND g.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="categoryId != null">
+                AND g.category_id = #{categoryId}
+            </if>
+            <if test="siteId != null">
+                AND g.site_id = #{siteId}
+
+            </if>
+        </where>
+        ORDER BY g.id DESC
+    </select>
+
+
+    <insert id="insert" parameterType="com.example.entity.Goods" useGeneratedKeys="true" keyProperty="id">
+        insert into goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="originPrice != null">origin_price,</if>
+            <if test="hasDiscount != null">has_discount,</if>
+            <if test="discountPrice != null">discount_price,</if>
+            <if test="hasFlash != null">has_flash,</if>
+            <if test="flashPrice != null">flash_price,</if>
+            <if test="content != null">content,</if>
+            <if test="img != null">img,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="date != null">date,</if>
+            <if test="store != null">store,</if>
+            <if test="flashTime != null">flash_time,</if>
+            <if test="flashNum != null">flash_num,</if>
+            <if test="siteId != null">site_id,</if>
+            <if test="url != null">url,</if>
+            <if test="type != null">type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="originPrice != null">#{originPrice},</if>
+            <if test="hasDiscount != null">#{hasDiscount},</if>
+            <if test="discountPrice != null">#{discountPrice},</if>
+            <if test="hasFlash != null">#{hasFlash},</if>
+            <if test="flashPrice != null">#{flashPrice},</if>
+            <if test="content != null">#{content},</if>
+            <if test="img != null">#{img},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="date != null">#{date},</if>
+            <if test="store != null">#{store},</if>
+            <if test="flashTime != null">#{flashTime},</if>
+            <if test="flashNum != null">#{flashNum},</if>
+            <if test="siteId != null">#{siteId},</if>
+            <if test="url != null">#{url},</if>
+            <if test="type != null">#{type},</if>
+        </trim>
+    </insert>
+
+
+    <select id="selectById" resultType="com.example.entity.Goods">
+        select * from goods where id = #{id}
+    </select>
+    
+    <delete id="deleteById">
+        delete from goods where id = #{id}
+    </delete>
+
+    <update id="updateById" parameterType="com.example.entity.Goods">
+        update goods
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="originPrice != null">origin_price = #{originPrice},</if>
+            <if test="hasDiscount != null">has_discount = #{hasDiscount},</if>
+            <if test="discountPrice != null">discount_price = #{discountPrice},</if>
+            <if test="hasFlash != null">has_flash = #{hasFlash},</if>
+            <if test="flashPrice != null">flash_price = #{flashPrice},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="img != null">img = #{img},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="date != null">date = #{date},</if>
+            <if test="store != null">store = #{store},</if>
+            <if test="flashTime != null">flash_time = #{flashTime},</if>
+            <if test="flashNum != null">flash_num = #{flashNum},</if>
+            <if test="siteId != null">
+                site_id = #{siteId},
+            </if>
+            <if test="url != null">url = #{url},</if>
+            <if test="type != null">type = #{type},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.MenuMapper">
+
+    <select id="selectAll" resultType="com.example.entity.Menu">
+        select
+        m1.*, m2.name as parent
+        from menu m1
+        left join menu m2
+        on m1.pid = m2.id
+        order by m1.sort
+    </select>
+
+    <select id="selectById" resultType="com.example.entity.Menu">
+        select * from menu
+        where id = #{id}
+    </select>
+
+    <delete id="deleteById">
+        delete from menu
+        where  id = #{id}
+    </delete>
+
+</mapper>

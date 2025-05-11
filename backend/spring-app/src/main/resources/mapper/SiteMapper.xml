@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.SiteMapper">
+
+    <!-- 1. 查询所有(可带条件) -->
+    <select id="selectAll" resultType="com.example.entity.Site">
+        SELECT *
+        FROM site
+        <where>
+            <!-- 模糊搜索站点名称 -->
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <!-- 模糊搜索域名 -->
+            <if test="domain != null and domain != ''">
+                AND domain LIKE CONCAT('%', #{domain}, '%')
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+
+    <!-- 2. 根据ID获取单条数据 -->
+    <select id="selectById" resultType="com.example.entity.Site">
+        SELECT *
+        FROM site
+        WHERE id = #{id}
+    </select>
+
+    <!-- 3. 插入新站点，自动生成主键 -->
+    <insert id="insert" parameterType="com.example.entity.Site" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO site
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="domain != null">domain,</if>
+            <if test="logo != null">logo,</if>
+            <if test="description != null">description,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="domain != null">#{domain},</if>
+            <if test="logo != null">#{logo},</if>
+            <if test="description != null">#{description},</if>
+        </trim>
+    </insert>
+
+    <!-- 4. 更新站点信息(根据ID) -->
+    <update id="updateById" parameterType="com.example.entity.Site">
+        UPDATE site
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="domain != null">
+                domain = #{domain},
+            </if>
+            <if test="logo != null">
+                logo = #{logo},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <!-- 如果需要更新时间，也可以设置为 NOW() -->
+
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 5. 删除站点(根据ID) -->
+    <delete id="deleteById">
+        DELETE FROM site
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

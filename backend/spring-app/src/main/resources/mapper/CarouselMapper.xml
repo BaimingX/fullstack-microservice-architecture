@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CarouselMapper">
+
+
+    <select id="selectAll" resultType="com.example.entity.Carousel">
+        SELECT c.*, g.name AS goodsName
+        FROM carousel c
+        LEFT JOIN goods g ON c.goods_id = g.id
+        <where>
+            <if test="goodsName != null">
+                AND g.name LIKE CONCAT('%', #{goodsName}, '%')
+            </if>
+            <if test="siteId != null">
+                AND c.site_id = #{siteId}
+            </if>
+        </where>
+        ORDER BY c.id DESC
+    </select>
+
+
+
+    <insert id="insert" parameterType="com.example.entity.Carousel" useGeneratedKeys="true" keyProperty="id">
+        insert into carousel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="goodsId != null">goods_id,</if>
+            <if test="img != null">img,</if>
+            <if test="siteId != null">site_id,</if>
+            <if test="mediaType != null">media_type,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="goodsId != null">#{goodsId},</if>
+            <if test="img != null">#{img},</if>
+            <if test="siteId != null">#{siteId},</if>
+            <if test="mediaType != null">#{mediaType},</if>
+        </trim>
+    </insert>
+
+
+    <select id="selectById" resultType="com.example.entity.Carousel">
+        select * from carousel where id = #{id}
+    </select>
+    
+    <delete id="deleteById">
+        delete from carousel where id = #{id}
+    </delete>
+
+    <update id="updateById" parameterType="com.example.entity.Carousel">
+        update carousel
+
+        <set>
+            <if test="goodsId != null">
+                goods_id = #{goodsId},
+            </if>
+            <if test="img != null">
+                img = #{img},
+            </if>
+            <if test="siteId != null">
+                site_id = #{siteId},
+            </if>
+            <if test="mediaType != null">
+                media_type = #{mediaType},
+            </if>
+        </set>
+
+        where id = #{id}
+    </update>
+
+</mapper>
