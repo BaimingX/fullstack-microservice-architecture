@@ -1,0 +1,80 @@
+# 编译输出
+/dist
+**/dist
+**/.next
+/.next
+/out
+/build
+/target
+*.class
+
+# 依赖目录
+/node_modules
+**/node_modules
+/.pnp
+.pnp.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+
+# 环境变量和敏感信息
+.env
+.env.*
+**/.env
+**/.env.*
+.env.production
+.env.development
+.env.local
+*.env
+**/src/main/resources/application-dev.yml
+**/src/main/resources/application-prod.yml
+**/application-dev.yml
+**/application-prod.yml
+
+# 日志和临时文件
+logs
+**/logs
+*.log
+upload
+**/upload
+files
+**/files
+tmp
+.DS_Store
+Thumbs.db
+.cache
+
+# IDE和编辑器
+.idea/
+.vscode/
+**/.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.project
+.classpath
+.settings/
+*.sublime-workspace
+
+# 测试
+/coverage
+.nyc_output
+
+# 密钥和证书
+**/certs/
+**/ssl/
+*.pem
+*.key
+*.crt
+*.p12
+
+# 数据库
+*.sqlite
+*.db
+
+# 缓存文件
+.eslintcache
+.stylelintcache
